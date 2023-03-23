@@ -24,16 +24,15 @@ const ModelSchema = new Schema({
   experience: { type: String },
   ethnicity: { type: String },
   nationality: { type:String},
-  gallery: {type:String},
-  description: {type:String},
-      socialLinks: {
-      facebook: { type: String },
-      instagram: { type: String },
-      twitter: { type: String },
-      linkedin: { type: String },
-    }
+  gallery: {type:[String]},
+  bodyType:{type:String},
+  facebook: { type: String },
+  instagram: { type: String },
+  twitter: { type: String },
+  linkedin: { type: String },
+    
 
 });
-
+///body tpe remove dec
 const Model = mongoose.model('Model',ModelSchema)
 module.exports= Model;
