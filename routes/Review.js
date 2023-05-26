@@ -1,27 +1,25 @@
-const router = require('express').Router();
+import Express from "express";
+import { Review } from "../models/Reviews.js";
 
-const json = require('express');
-let Review = require('../models/Reviews');
+export const router = Express.Router();
 
-router.route('/').get((req,res)=>{
-    Review.find()
-    .then(Review =>res.json(Review))
-    .catch(err=>res.status(400).json('Error: '+ err));
+router.route("/").get((req, res) => {
+  Review.find()
+    .then((Review) => res.json(Review))
+    .catch((err) => res.status(400).json("Error: " + err));
 });
-router.route('/:id').get((req,res)=>{
-    Review.findById(req.param.id)
-    .then(Review=>res.json(Review))
-    .catch(err=>res.status(400).json("Error"+err))
+router.route("/:id").get((req, res) => {
+  Review.findById(req.param.id)
+    .then((Review) => res.json(Review))
+    .catch((err) => res.status(400).json("Error" + err));
 });
-router.route('/delete/:id').delete((req,res)=>{
-    Review.findByIdAndDelete(req.param.id)
-    .then(()=>res.json('Review Deleted'))
-    .catch(err=>res.status(400).json("Error"+err))
+router.route("/delete/:id").delete((req, res) => {
+  Review.findByIdAndDelete(req.param.id)
+    .then(() => res.json("Review Deleted"))
+    .catch((err) => res.status(400).json("Error" + err));
 });
-
 
 // router.route('/search').post((req,res)=>{
-
 
 //     Review.find({
 //     "gender":req.body.gender,
@@ -36,53 +34,44 @@ router.route('/delete/:id').delete((req,res)=>{
 //     "experiece":{$gt:req.body.experiencegt,$lt:req.body.experiecelt},
 //     "ethnicity":{$in:req.body.ethnicity},
 //     "nationality":{$in:req.body.nationality}
-   
-
 
 // })
 //     .then(Review=>res.json(Review))
 //     .catch(err=>res.status(400).json('Err'+err))
 // });
-router.route('/new').post((req,res)=>{
-    
+router.route("/new").post((req, res) => {
   const review = req.body.review;
   const rating = req.body.rating;
-  const modelID=req.body.modelID;
+  const modelID = req.body.modelID;
   const recruiterID = req.body.recruiterID;
-     
-    console.log(review,rating,modelID,recruiterID);
-    const newReview = new Review({
-        review,
-        rating,
-        modelID,
-        recruiterID
-     
+
+  console.log(review, rating, modelID, recruiterID);
+  const newReview = new Review({
+    review,
+    rating,
+    modelID,
+    recruiterID,
   });
-  newReview.save()
-  .then(()=> res.json('Registered'))
-//   .then(err=>res.status(400).json('ErroR'+err));
-
+  newReview.save().then(() => res.json("Registered"));
+  //   .then(err=>res.status(400).json('ErroR'+err));
 });
-router.route('/update/:id').post((req,res)=>{
-    Review.findById(req.params.id)
-    .then(Review=>{
-    Review.review = req.body.review;
-    Review.rating = req.body.rating;
-    Review.modelID = req.body.modelID;
-    Review.recruiterID= req.body.recruiterID;
-    
+router.route("/update/:id").post((req, res) => {
+  Review.findById(req.params.id)
+    .then((Review) => {
+      Review.review = req.body.review;
+      Review.rating = req.body.rating;
+      Review.modelID = req.body.modelID;
+      Review.recruiterID = req.body.recruiterID;
 
-    Review.save()
-    .then(()=>res.json("Review Updated"))
-    .catch(err=>res.status(400).json('Error'+err))
-
-    }).catch(err=>res.status(400).json('Error'+err))
-
+      Review.save()
+        .then(() => res.json("Review Updated"))
+        .catch((err) => res.status(400).json("Error" + err));
+    })
+    .catch((err) => res.status(400).json("Error" + err));
 });
-router.route('/model').post((req,res)=>{
-    console.log(req.body.modelID)
-    Review.find({"modelID":req.body.modelID})
-    .then(Review=>res.json(Review))
-    .catch(err=>res.status(400).json('Error'+err))
+router.route("/model").post((req, res) => {
+  console.log(req.body.modelID);
+  Review.find({ modelID: req.body.modelID })
+    .then((Review) => res.json(Review))
+    .catch((err) => res.status(400).json("Error" + err));
 });
-module.exports = router;

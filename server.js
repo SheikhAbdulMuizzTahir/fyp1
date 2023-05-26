@@ -1,39 +1,30 @@
-require('dotenv').config();
-const express = require('express');
-const cors = require('cors');
-const connectDB = require('./config/connectdb');
-const mongoose = require('mongoose');
-var bodyParser= require('body-parser');
+import Express from "express";
+import dotenv from "dotenv";
+import cors from "cors";
+import { connectDB } from "./config/connectdb.js";
+import bodyParser from "body-parser";
 
+import { Job, Model, Recruiter, Review } from "./routes/index.js";
 
-const uri = process.env.ATLAS_URI;
-// console.log(uri);
+dotenv.config();
 connectDB();
 
-const app = express();
+const app = Express();
 const port = process.env.PORT || 5000;
+
 app.use(bodyParser.json());
-// app.use(express.json());
-app.get('/',(req,res)=>{res.send("hello world")})
+app.use(Express.json());
+app.use(cors());
 
-const modelRouter = require('./routes/Model');
-app.use('/models',modelRouter);
+app.get("/", (req, res) => {
+  res.send("hello world");
+});
 
-const recruiterRouter = require('./routes/Recruiter');
-app.use('/recruiters',recruiterRouter);
-
-const jobRouter = require('./routes/job');
-app.use('/jobs',jobRouter);
-
-const reviewRouter = require('./routes/Review');
-app.use('/reviews',reviewRouter);
+app.use("/models", Model);
+app.use("/recruiters", Recruiter);
+app.use("/jobs", Job);
+app.use("/reviews", Review);
 
 app.listen(port, () => {
-    console.log(`Server is running on port: ${port}`);
+  console.log(`Server is running on port: ${port}`);
 });
-
-mongoose.connection.once('open', () => {
-    console.log('Connected to MongoDB');
-});
-
-

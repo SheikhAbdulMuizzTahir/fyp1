@@ -1,16 +1,11 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
-
-
-
-
 const ModelSchema = new Schema({
-  
-  name: { type: String},
-  email: { type: String},
+  name: { type: String },
+  email: { type: String },
   password: { type: String },
-  phoneno: {type: String},
+  phoneno: { type: String },
   gender: { type: String },
   birthdate: { type: Date },
   profilePic: { type: String },
@@ -23,16 +18,13 @@ const ModelSchema = new Schema({
   shoeSize: { type: Number },
   experience: { type: String },
   ethnicity: { type: String },
-  nationality: { type:String},
-  gallery: {type:[String]},
-  bodyType:{type:String},
+  nationality: { type: String },
+  gallery: { type: [String] },
+  bodyType: { type: String },
   facebook: { type: String },
   instagram: { type: String },
   twitter: { type: String },
   linkedin: { type: String },
-    
-
 });
 ///body tpe remove dec
-const Model = mongoose.model('Model',ModelSchema)
-module.exports= Model;
+export const Model = mongoose.model("Model", ModelSchema);
