@@ -14,7 +14,7 @@ const ModelSchema = new Schema({
   hairColor: { type: String },
   eyeColor: { type: String },
   waist: { type: Number },
-  dressSize: { type: Number },
+  dressSize: { type: String },
   shoeSize: { type: Number },
   experience: { type: String },
   ethnicity: { type: String },
