@@ -3,6 +3,8 @@ import { Review } from "../models/Reviews.js";
 
 export const router = Express.Router();
 
+
+
 router.route("/").get((req, res) => {
   Review.find()
     .then((Review) => res.json(Review))
@@ -75,3 +77,4 @@ router.route("/model").post((req, res) => {
     .then((Review) => res.json(Review))
     .catch((err) => res.status(400).json("Error" + err));
 });
+

@@ -2,6 +2,8 @@ import Express from "express";
 import { Recruiter } from "../models/Recruiters.js";
 export const router = Express.Router();
 
+
+
 router.route("/").get((req, res) => {
   Recruiter.find()
     .then((Recruiter) => res.json(Recruiter))
@@ -12,11 +14,16 @@ router.route("/:id").get((req, res) => {
     .then((Recruiter) => res.json(Recruiter))
     .catch((err) => res.status(400).json("Error" + err));
 });
+
+
+
 router.route("/delete/:id").delete((req, res) => {
   Recruiter.findByIdAndDelete(req.param.id)
     .then(() => res.json("Recruiter Deleted"))
     .catch((err) => res.status(400).json("Error" + err));
 });
+
+
 
 router.route("/login").post((req, res) => {
   const { name, password } = req.body;

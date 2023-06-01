@@ -16,6 +16,7 @@ const RecruiterSchema = new Schema({
   instagram: { type: String },
   twitter: { type: String },
   linkedin: { type: String },
+  rating: { type: Number },
 });
 //category rem gender
 export const Recruiter = mongoose.model("Recruiter", RecruiterSchema);

@@ -18,6 +18,8 @@ const JobsSchema = new Schema({
   ethnicity: { type: String },
   nationality: { type: String },
   bodyType: { type: String },
+  validTill: { type: Date },
+  fromCountry: { type: String },
 });
 
 export const Jobs = mongoose.model("Jobs", JobsSchema);
