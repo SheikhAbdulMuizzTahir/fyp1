@@ -2,13 +2,15 @@ import { Jobs } from "../models/Jobs.js";
 
 export const createJob = async (req, res) => {
   try {
+    console.log(req.body);
+
     const jobtitle = req.body.jobtitle;
     const jobDescription = req.body.jobDescription;
     const recruiterID = req.body.recruiterID;
     const paymentInfo = req.body.paymentInfo;
     const gender = req.body.gender;
-    const height = req.body.height;
-    const weight = req.body.weight;
+    const height = String(req.body.height).split("-")[0];
+    const weight = String(req.body.weight).split("-")[0];
     const hairColor = req.body.hairColor;
     const eyeColor = req.body.eyeColor;
     const waist = req.body.waist;
@@ -17,6 +19,7 @@ export const createJob = async (req, res) => {
     const ethnicity = req.body.ethnicity;
     const nationality = req.body.nationality;
     const bodyType = req.body.bodyType;
+
 
     //console.log(name,email,password);
     const newJob = new Jobs({
@@ -84,9 +87,13 @@ export const getJobById = async (req, res) => {
 };
 
 export const deleteJob = async (req, res) => {
-  Jobs.findByIdAndDelete(req.param.id)
-    .then(() => res.json("Job Deleted"))
-    .catch((err) => res.status(400).json("Error" + err));
+  try {
+    console.log(req.params);
+    await Jobs.deleteOne({ _id: req.params.id });
+    res.status(200).json({ message: "Job deleted successfully" });
+  } catch (error) {
+    return res.status(400).json({ message: error });
+  }
 };
 
 export const searchJobs = async (req, res) => {

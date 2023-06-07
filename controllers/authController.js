@@ -1,5 +1,6 @@
 import { Model } from "../models/Models.js";
 import { Recruiter } from "../models/Recruiters.js";
+import { Jobs } from "../models/Jobs.js";
 import bcrypt from "bcrypt";
 
 export const handleLogin = async (req, res) => {
@@ -27,7 +28,10 @@ export const handleLogin = async (req, res) => {
       if (!isPasswordCorrect) {
         return res.status(400).json("Invalid credentials");
       }
-      return res.status(200).json({ ...recruiter, type: "Recruiter" });
+
+      const jobs = await Jobs.find({ recruiterID: recruiter._id }).exec();
+
+      return res.status(200).json({ ...recruiter, type: "Recruiter", jobs });
     }
   } catch (error) {
     return res.status(500).json(error);
@@ -99,27 +103,18 @@ export const handleRegister = async (req, res) => {
       res.status(200).send({ ...newModel, type: "Model" });
     } else {
       const {
+        name,
         email,
         password,
         confirmPassword,
-        whoru,
-        fName,
-        lName,
-        dob,
-        height,
-        weight,
-        waist,
-        gender,
-        country,
-        ethnicity,
-        hairColor,
-        eyeColor,
-        bodyType,
-        dressSize,
-        experience,
-        instaUsername,
-        facebookUsername,
-        twitterUsername,
+        category,
+        bio,
+        companyName,
+        website,
+        location,
+        facebook, 
+        instagram,
+        linkedin,
       } = req.body;
 
       const recruiter = await Recruiter.findOne({ email: email }).exec();
@@ -132,28 +127,21 @@ export const handleRegister = async (req, res) => {
       const hashedPassword = await bcrypt.hash(password, 12);
 
       const newRecruiter = await new Recruiter({
+        name,
         email,
         password: hashedPassword,
-        name: fName + " " + lName,
-        birthdate: new Date(dob),
-        height,
-        weight,
-        waist,
-        gender,
-        nationality: country,
-        ethnicity,
-        hairColor,
-        eyeColor,
-        bodyType,
-        dressSize,
-        experience,
-        instagram: instaUsername,
-        facebook: facebookUsername,
-        twitter: twitterUsername,
+        category,
+        bio,
+        companyName,
+        website,
+        location,
+        facebook,
+        instagram,
+        linkedin,
       });
 
       await newRecruiter.save();
-      res.status(200).send({ ...newRecruiter, type: "Recruiter" });
+      res.status(200).send({ ...newRecruiter, type: "Recruiter", jobs: [] });
     }
   } catch (error) {
     console.error(error);

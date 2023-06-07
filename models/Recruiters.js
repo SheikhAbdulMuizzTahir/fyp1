@@ -6,9 +6,7 @@ const RecruiterSchema = new Schema({
   email: { type: String, required: true },
   password: { type: String, required: true },
   category: { type: String },
-  birthdate: { type: Date },
   bio: { type: String },
-  phone: { type: String },
   companyName: { type: String },
   website: { type: String },
   location: { type: String },
@@ -18,5 +16,5 @@ const RecruiterSchema = new Schema({
   linkedin: { type: String },
   rating: { type: Number },
 });
-//category rem gender
+
 export const Recruiter = mongoose.model("Recruiter", RecruiterSchema);
