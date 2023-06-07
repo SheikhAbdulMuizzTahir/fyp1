@@ -92,6 +92,7 @@ export const handleRegister = async (req, res) => {
         instagram: instaUsername,
         facebook: facebookUsername,
         twitter: twitterUsername,
+        category: whoru,
       });
 
       await newModel.save();

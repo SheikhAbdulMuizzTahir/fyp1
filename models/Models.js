@@ -26,6 +26,7 @@ const ModelSchema = new Schema({
   twitter: { type: String },
   linkedin: { type: String },
   rating: { type: Number },
+  category: { type: String },
 });
 ///body tpe remove dec
 export const Model = mongoose.model("Model", ModelSchema);

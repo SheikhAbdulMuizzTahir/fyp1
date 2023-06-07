@@ -132,11 +132,10 @@ router.route("/update/:id").post((req, res) => {
     .catch((err) => res.status(400).json("Error" + err));
 });
 
-
 router.route("/addpictures").post((req, res) => {
   Model.findById(req.params.id)
     .then((Model) => {
-      Model.gallery = req.body.gallery;
+      Model.gallery.push(req.body.gallery);
 
       Model.save()
         .then(() => res.json("Model Updated"))
