@@ -66,6 +66,7 @@ export const handleRegister = async (req, res) => {
         instaUsername,
         facebookUsername,
         twitterUsername,
+        profilePic
       } = req.body;
 
       const model = await Model.findOne({ email: email }).exec();
@@ -97,6 +98,7 @@ export const handleRegister = async (req, res) => {
         facebook: facebookUsername,
         twitter: twitterUsername,
         category: whoru,
+        profilePic,
       });
 
       await newModel.save();
