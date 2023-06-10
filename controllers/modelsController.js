@@ -1,4 +1,6 @@
+import { Types } from "mongoose";
 import { Model } from "../models/Models.js";
+import { ObjectId } from "mongodb";
 
 export const getAllModels = async (req, res) => {
   try {
@@ -30,3 +32,17 @@ export const updateProfilePic = async (req, res) => {
     res.status(404).json({ message: error.message });
   }
 };
+
+// update gallery
+export const updateGallery = async (req, res) => {
+  try {
+    const modelId = req.params.id;
+    console.log(modelId);
+    const model = await Model.findById(modelId);
+    model.gallery = req.body.gallery;
+    const updatedModel = await model.save();
+    res.status(200).json(updatedModel);
+  } catch (error) {
+    res.status(401).json({ message: error.message });
+  }
+}
